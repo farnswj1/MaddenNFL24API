@@ -1,7 +1,7 @@
 package models
 
 type Player struct {
-  ID                       uint32   `json:"id" gorm:"primary_key"`
+  ID                       uint32 `json:"id" gorm:"primary_key"`
   AccelerationRating       uint8  `json:"acceleration_rating"`
   Age                      uint8  `json:"age"`
   AgilityRating            uint8  `json:"agility_rating"`
