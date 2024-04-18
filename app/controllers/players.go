@@ -28,3 +28,15 @@ func CreatePlayer(c *gin.Context) {
   models.DB.Create(&player)
   c.JSON(http.StatusCreated, player)
 }
+
+func FindPlayer(c *gin.Context) {
+  id := c.Param("id")
+  var player models.Player
+
+  if err := models.DB.First(&player, "id = ?", id).Error; err != nil {
+    c.JSON(http.StatusNotFound, gin.H{"error": "Player not found"})
+    return
+  }
+
+  c.JSON(http.StatusOK, player)
+}

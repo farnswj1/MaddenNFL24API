@@ -11,16 +11,23 @@ import (
 
 func getRouter() *gin.Engine {
   gin.SetMode(utils.GetenvOrDefault("GIN_MODE", "debug"))
-  r := gin.Default()
-  r.GET("/", controllers.Root)
-  r.GET("/players", controllers.FindPlayers)
-  r.POST("/players", controllers.CreatePlayer)
-  return r
+  router := gin.Default()
+  router.RemoveExtraSlash = true
+  router.NoRoute(controllers.PageNotFound)
+  router.NoMethod(controllers.MethodNotAllowed)
+  router.GET("/", controllers.Root)
+
+  group := router.Group("/players")
+  group.GET("/", controllers.FindPlayers)
+  group.POST("/", controllers.CreatePlayer)
+  group.GET("/:id", controllers.FindPlayer)
+
+  return router
 }
 
 func main() {
   godotenv.Load()
   models.ConnectDatabase()
-  r := getRouter()
-  r.Run()
+  router := getRouter()
+  router.Run()
 }
