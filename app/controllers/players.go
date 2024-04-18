@@ -1,31 +1,30 @@
 package controllers
 
 import (
-	"app/models"
-	"app/serializers"
-	"net/http"
+  "app/models"
+  "net/http"
 
-	"github.com/gin-gonic/gin"
+  "github.com/gin-gonic/gin"
 )
 
 func Root(c *gin.Context) {
-	c.JSON(http.StatusOK, "This is a test!!!!")
+  c.JSON(http.StatusOK, "This is a test!!!!")
 }
 
 func FindPlayers(c *gin.Context) {
-	var players []models.Player
-	models.DB.Find(&players)
-	c.JSON(http.StatusOK, players)
+  var players []models.Player
+  models.DB.Find(&players)
+  c.JSON(http.StatusOK, players)
 }
 
 func CreatePlayer(c *gin.Context) {
-	var player serializers.Player
+  var player models.Player
 
-	if err := c.ShouldBindJSON(&player); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-		return
-	}
+  if err := c.ShouldBindJSON(&player); err != nil {
+    c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+    return
+  }
 
-	models.DB.Create(&player)
-	c.JSON(http.StatusCreated, player)
+  models.DB.Create(&player)
+  c.JSON(http.StatusCreated, player)
 }
