@@ -1,6 +1,7 @@
 package models
 
 import (
+	"app/utils"
 	"os"
 
 	"gorm.io/driver/postgres"
@@ -10,18 +11,21 @@ import (
 var DB *gorm.DB
 
 func ConnectDatabase() {
+	utils.Logger.Println("Connecting to database...")
+
 	database, err := gorm.Open(
 		postgres.Open(os.Getenv("DATABASE_URL")),
 		&gorm.Config{},
 	)
 
 	if err != nil {
-		panic("Failed to connect to database!")
+		utils.Logger.Panic(err.Error())
 	}
 
 	if err = database.AutoMigrate(&Player{}); err != nil {
-		panic("Failed to make migrations to database!")
+		utils.Logger.Panic(err.Error())
 	}
 
 	DB = database
+	utils.Logger.Println("Connected to database!")
 }
