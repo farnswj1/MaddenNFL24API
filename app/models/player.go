@@ -1,8 +1,12 @@
 package models
 
-import "app/serializers"
+import (
+	"app/serializers"
+
+	"github.com/google/uuid"
+)
 
 type Player struct {
-  ID uint32 `json:"id" gorm:"primary_key;autoIncrement"`
+  ID uuid.UUID `json:"id" gorm:"type:uuid;default:gen_random_uuid();primary_key;"`
   serializers.Player
 }

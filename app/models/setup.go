@@ -20,7 +20,7 @@ func ConnectDatabase() {
 	}
 
 	if err = database.AutoMigrate(&Player{}); err != nil {
-		panic("Faield to make migrations to database!")
+		panic("Failed to make migrations to database!")
 	}
 
 	DB = database

@@ -15,7 +15,7 @@ func Root(c *gin.Context) {
 func FindPlayers(c *gin.Context) {
 	var players []models.Player
 	models.DB.Find(&players)
-	c.JSON(http.StatusOK, gin.H{"data": players})
+	c.JSON(http.StatusOK, players)
 }
 
 func CreatePlayer(c *gin.Context) {
