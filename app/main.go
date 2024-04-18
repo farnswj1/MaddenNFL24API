@@ -14,6 +14,7 @@ func getRouter() *gin.Engine {
 	r := gin.Default()
 	r.GET("/", controllers.Root)
 	r.GET("/players", controllers.FindPlayers)
+	r.POST("/players", controllers.CreatePlayer)
 	return r
 }
 
