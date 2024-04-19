@@ -1,15 +1,19 @@
 package models
 
-import "github.com/google/uuid"
+import (
+  "time"
+
+  "github.com/google/uuid"
+)
 
 type Player struct {
-  ID                       uuid.UUID `json:"id" gorm:"type:uuid;default:gen_random_uuid();primary_key;"`
+  ID                       uuid.UUID `json:"id" gorm:"type:uuid;default:gen_random_uuid();primary_key"`
   AccelerationRating       uint8     `json:"acceleration_rating" binding:"numeric,min=0,max=99" gorm:"not null"`
   Age                      uint8     `json:"age" binding:"numeric,min=0,max=99" gorm:"not null"`
   AgilityRating            uint8     `json:"agility_rating" binding:"numeric,min=0,max=99" gorm:"not null"`
   AwarenessRating          uint8     `json:"awareness_rating" binding:"numeric,min=0,max=99" gorm:"not null"`
   BallCarrierVisionRating  uint8     `json:"ball_carrier_vision_rating" binding:"numeric,min=0,max=99" gorm:"not null"`
-  BirthDate                string    `json:"birth_date" binding:"required,max=12" gorm:"type:varchar(12);not null"`
+  BirthDate                time.Time `json:"birth_date" binding:"required,max=30" gorm:"type:date;not null"`
   BlockSheddingRating      uint8     `json:"block_shedding_rating" binding:"numeric,min=0,max=99" gorm:"not null"`
   BreakSackRating          uint8     `json:"break_sack_rating" binding:"numeric,min=0,max=99" gorm:"not null"`
   BreakTackleRating        uint8     `json:"break_tackle_rating" binding:"numeric,min=0,max=99" gorm:"not null"`
