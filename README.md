@@ -6,6 +6,7 @@ The project uses the following:
 - Go
 - Gin
 - PostgreSQL
+- Redis
 - Docker
 - Docker Compose
 

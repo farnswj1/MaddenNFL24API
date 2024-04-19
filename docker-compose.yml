@@ -7,6 +7,12 @@ services:
       - ./postgres/.env
     volumes:
       - postgres_data:/var/lib/postgresql/data/:rw
+  redis:
+    container_name: redis
+    image: redis:7
+    restart: always
+    volumes:
+      - redis_data:/data/:rw
   app:
     container_name: app
     image: app
@@ -20,3 +26,4 @@ services:
       - postgres
 volumes:
   postgres_data:
+  redis_data:
