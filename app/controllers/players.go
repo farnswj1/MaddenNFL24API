@@ -21,7 +21,7 @@ func CreatePlayer(c *gin.Context) {
   var player models.Player
 
   if err := c.ShouldBindJSON(&player); err != nil {
-    c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+    c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"error": err.Error()})
     return
   }
 
@@ -34,7 +34,7 @@ func FindPlayer(c *gin.Context) {
   var player models.Player
 
   if err := models.DB.First(&player, "id = ?", id).Error; err != nil {
-    c.JSON(http.StatusNotFound, gin.H{"error": "Player not found"})
+    c.AbortWithStatusJSON(http.StatusNotFound, gin.H{"error": "Player not found"})
     return
   }
 

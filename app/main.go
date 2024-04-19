@@ -1,7 +1,9 @@
 package main
 
 import (
+  "app/cache"
   "app/controllers"
+  "app/middleware"
   "app/models"
   "app/utils"
 
@@ -13,6 +15,8 @@ func getRouter() *gin.Engine {
   gin.SetMode(utils.GetenvOrDefault("GIN_MODE", "debug"))
   router := gin.Default()
   router.RemoveExtraSlash = true
+  router.Use(middleware.RateLimiter("app", 5, 60))
+
   router.NoRoute(controllers.PageNotFound)
   router.NoMethod(controllers.MethodNotAllowed)
   router.GET("/", controllers.Root)
@@ -28,6 +32,7 @@ func getRouter() *gin.Engine {
 func main() {
   godotenv.Load()
   models.ConnectDatabase()
+  cache.ConnectRedis()
   router := getRouter()
   router.Run()
 }
