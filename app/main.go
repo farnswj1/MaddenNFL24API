@@ -1,6 +1,7 @@
 package main
 
 import (
+  "app/auth"
   "app/cache"
   "app/controllers"
   "app/middleware"
@@ -16,14 +17,17 @@ func getRouter() *gin.Engine {
   router := gin.Default()
   router.RemoveExtraSlash = true
   router.Use(middleware.RateLimiter("app", 5, 60))
-
   router.NoRoute(controllers.PageNotFound)
   router.NoMethod(controllers.MethodNotAllowed)
   router.GET("/", controllers.Root)
 
+  authGroup := router.Group("/auth")
+  authGroup.POST("/login", auth.JWTConfig.LoginHandler)
+  authGroup.POST("/refresh", auth.JWTConfig.RefreshHandler)
+
   group := router.Group("/players")
   group.GET("/", controllers.FindPlayers)
-  group.POST("/", controllers.CreatePlayer)
+  group.POST("/", middleware.JWTMiddleware(), controllers.CreatePlayer)
   group.GET("/:id", controllers.FindPlayer)
 
   return router

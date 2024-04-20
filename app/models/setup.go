@@ -34,6 +34,10 @@ func ConnectDatabase() {
     utils.Logger.Panic(err.Error())
   }
 
+  if err = database.AutoMigrate(&User{}); err != nil {
+    utils.Logger.Panic(err.Error())
+  }
+
   DB = database
   utils.Logger.Println("Connected to database!")
 }
