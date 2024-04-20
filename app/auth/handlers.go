@@ -27,7 +27,7 @@ func IdentityHandler(c *gin.Context) interface{} {
     return nil
   }
 
-  return user
+  return &user
 }
 
 func Authenticator(c *gin.Context) (interface{}, error) {
@@ -52,7 +52,8 @@ func Authenticator(c *gin.Context) (interface{}, error) {
 }
 
 func Authorizator(data interface{}, c *gin.Context) bool {
-  return true
+  _, ok := data.(*models.User)
+  return ok
 }
 
 func Unauthorized(c *gin.Context, code int, message string) {
