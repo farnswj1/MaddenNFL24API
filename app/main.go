@@ -16,7 +16,7 @@ func getRouter() *gin.Engine {
   gin.SetMode(utils.GetenvOrDefault("GIN_MODE", "debug"))
   router := gin.Default()
   router.RemoveExtraSlash = true
-  router.Use(middleware.RateLimiter("app", 5, 60))
+  router.Use(middleware.RateLimiter("app", 10, 60))
   router.NoRoute(controllers.PageNotFound)
   router.NoMethod(controllers.MethodNotAllowed)
   router.GET("/", controllers.Root)
@@ -25,10 +25,14 @@ func getRouter() *gin.Engine {
   authGroup.POST("/login", auth.JWTConfig.LoginHandler)
   authGroup.POST("/refresh", auth.JWTConfig.RefreshHandler)
 
-  group := router.Group("/players")
-  group.GET("/", controllers.FindPlayers)
-  group.POST("/", middleware.JWTMiddleware(), controllers.CreatePlayer)
-  group.GET("/:id", controllers.FindPlayer)
+  playersGroup := router.Group("/players")
+  playersGroup.GET("/", controllers.FindPlayers)
+  playersGroup.GET("/:id", controllers.FindPlayer)
+
+  modifyPlayersGroup := playersGroup.Group("", middleware.JWTMiddleware())
+  modifyPlayersGroup.POST("/", controllers.CreatePlayer)
+  modifyPlayersGroup.PUT("/:id", controllers.UpdatePlayer)
+  modifyPlayersGroup.DELETE("/:id", controllers.DeletePlayer)
 
   return router
 }

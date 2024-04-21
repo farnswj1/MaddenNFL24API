@@ -76,3 +76,8 @@ type Player struct {
   NumYears                 uint8     `json:"num_years" binding:"numeric,min=0,max=99" gorm:"not null"`
   ZoneCoverageRating       uint8     `json:"zone_coverage_rating" binding:"numeric,min=0,max=99" gorm:"not null"`
 }
+
+type PlayerWithID struct {
+  ID uuid.UUID `json:"id" binding:"required,uuid" gorm:"type:uuid;default:gen_random_uuid();primary_key"`
+  Player
+}
