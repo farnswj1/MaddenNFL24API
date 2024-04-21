@@ -27,6 +27,8 @@ that contains the following environment variables:
 ```
 GIN_MODE=release
 DATABASE_URL=postgresql://postgres:password@postgres:5432/madden_24
+REDIS_URL=redis://redis:6379/0
+SECRET_KEY=secret
 ```
 
 ## Building
