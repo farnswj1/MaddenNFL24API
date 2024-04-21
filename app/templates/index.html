@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Madden NFL 24 API</title>
+    <style>
+      h1 {
+        font-size: 3rem;
+      }
+
+      p {
+        font-size: 1.5rem;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Welcome to Madden NFL 24 API!</h1>
+    <p>There are {{ .numPlayers }} players in this API.</p>
+    <p><code>[GET] /players</code> &nbsp; (View all players)</p>
+    <p><code>[GET] /players/:id</code> &nbsp; (View a specific player)</p>
+  </body>
+</html>

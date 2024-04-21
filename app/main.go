@@ -17,6 +17,7 @@ func getRouter() *gin.Engine {
   router := gin.Default()
   router.RemoveExtraSlash = true
   router.Use(middleware.RateLimiter("app", 10, 60))
+  router.LoadHTMLGlob("templates/*")
   router.NoRoute(controllers.PageNotFound)
   router.NoMethod(controllers.MethodNotAllowed)
   router.GET("/", controllers.Root)
