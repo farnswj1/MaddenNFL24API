@@ -16,6 +16,7 @@ func getRouter() *gin.Engine {
   gin.SetMode(utils.GetenvOrDefault("GIN_MODE", "debug"))
   router := gin.Default()
   router.RemoveExtraSlash = true
+  router.Use(middleware.CorsMiddlware())
   router.LoadHTMLGlob("templates/*")
   router.NoRoute(controllers.PageNotFound)
   router.NoMethod(controllers.MethodNotAllowed)
