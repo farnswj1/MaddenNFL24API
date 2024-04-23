@@ -9,7 +9,6 @@ import (
   "app/utils"
 
   "github.com/gin-gonic/gin"
-  "github.com/joho/godotenv"
 )
 
 func getRouter() *gin.Engine {
@@ -39,7 +38,7 @@ func getRouter() *gin.Engine {
 }
 
 func main() {
-  godotenv.Load()
+  utils.LoadEnv()
   models.ConnectDatabase()
   cache.ConnectRedis()
   router := getRouter()

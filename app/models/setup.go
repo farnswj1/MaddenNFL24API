@@ -2,7 +2,6 @@ package models
 
 import (
   "app/utils"
-  "os"
 
   "gorm.io/driver/postgres"
   "gorm.io/gorm"
@@ -22,7 +21,7 @@ func ConnectDatabase() {
   }
 
   database, err := gorm.Open(
-    postgres.Open(os.Getenv("DATABASE_URL")),
+    postgres.Open(utils.Env["DATABASE_URL"]),
     config,
   )
 

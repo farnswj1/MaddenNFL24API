@@ -1,7 +1,7 @@
 package middleware
 
 import (
-  "os"
+  "app/utils"
   "strings"
   "time"
 
@@ -10,11 +10,11 @@ import (
 )
 
 func CorsMiddlware() gin.HandlerFunc {
-  origins := strings.Split(os.Getenv("CORS_ALLOWED_ORIGINS"), " ")
+  origins := strings.Split(utils.Env["CORS_ALLOWED_ORIGINS"], " ")
   return cors.New(cors.Config{
-    AllowOrigins:     origins,
-    AllowHeaders:     []string{"Origin"},
-    ExposeHeaders:    []string{"Content-Length"},
-    MaxAge: 12 * time.Hour,
+    AllowOrigins:  origins,
+    AllowHeaders:  []string{"Origin"},
+    ExposeHeaders: []string{"Content-Length"},
+    MaxAge:        12 * time.Hour,
   })
 }
