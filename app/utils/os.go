@@ -15,9 +15,7 @@ func LoadEnv() {
   items := EnvMap{}
 
   for _, item := range os.Environ() {
-    splits := strings.Split(item, "=")
-    key := splits[0]
-    val := splits[1]
+    key, val, _ := strings.Cut(item, "=")
     items[key] = val
   }
 
