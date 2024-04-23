@@ -12,6 +12,10 @@ import (
 )
 
 func getRouter() *gin.Engine {
+  utils.LoadEnv()
+  models.ConnectDatabase()
+  cache.ConnectRedis()
+
   gin.SetMode(utils.GetenvOrDefault("GIN_MODE", "debug"))
   router := gin.Default()
   router.RemoveExtraSlash = true
@@ -38,9 +42,6 @@ func getRouter() *gin.Engine {
 }
 
 func main() {
-  utils.LoadEnv()
-  models.ConnectDatabase()
-  cache.ConnectRedis()
   router := getRouter()
   router.Run()
 }
