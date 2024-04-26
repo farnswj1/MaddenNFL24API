@@ -11,6 +11,10 @@ import (
 var DB *gorm.DB
 
 func ConnectDatabase() {
+  if DB != nil {
+    return
+  }
+
   utils.Logger.Println("Connecting to database...")
 
   config := &gorm.Config{}

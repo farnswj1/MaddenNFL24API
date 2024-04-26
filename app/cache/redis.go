@@ -9,6 +9,10 @@ import (
 var Cache *redis.Client
 
 func ConnectRedis() {
+  if Cache != nil {
+    return
+  }
+
   utils.Logger.Println("Connecting to Redis...")
   opt, err := redis.ParseURL(utils.Env["REDIS_URL"])
 

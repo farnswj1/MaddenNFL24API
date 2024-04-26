@@ -11,6 +11,10 @@ type EnvMap map[string]string
 var Env EnvMap
 
 func LoadEnv() {
+  if Env != nil {
+    return
+  }
+
   godotenv.Load()
   items := EnvMap{}
 
