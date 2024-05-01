@@ -18,7 +18,7 @@ func ConnectDatabase() {
   utils.Logger.Println("Connecting to database...")
 
   config := &gorm.Config{}
-  mode := utils.GetenvOrDefault("GIN_MODE", "debug")
+  mode := utils.Env.Get("GIN_MODE", "debug")
 
   if mode == "release" {
     config.Logger = logger.Default.LogMode(logger.Silent)

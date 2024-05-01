@@ -12,11 +12,11 @@ var JWTConfig = func() *jwt.GinJWTMiddleware {
     Key:         []byte(utils.Env["SECRET_KEY"]),
     MaxRefresh:  time.Hour,
     IdentityKey: "id",
-    PayloadFunc: PayloadFunc,
-    IdentityHandler: IdentityHandler,
-    Authenticator: Authenticator,
-    Authorizator: Authorizator,
-    Unauthorized: Unauthorized,
+    PayloadFunc: payloadFunc,
+    IdentityHandler: identityHandler,
+    Authenticator: authenticator,
+    Authorizator: authorizator,
+    Unauthorized: unauthorized,
   })
 
   if err != nil {

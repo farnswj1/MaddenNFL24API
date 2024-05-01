@@ -16,7 +16,7 @@ func getRouter() *gin.Engine {
   models.ConnectDatabase()
   cache.ConnectRedis()
 
-  gin.SetMode(utils.GetenvOrDefault("GIN_MODE", "debug"))
+  gin.SetMode(utils.Env.Get("GIN_MODE", "debug"))
   router := gin.Default()
   router.RemoveExtraSlash = true
   router.Use(middleware.CorsMiddlware())

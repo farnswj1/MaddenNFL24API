@@ -9,7 +9,7 @@ import (
   "golang.org/x/crypto/bcrypt"
 )
 
-func PayloadFunc(data interface{}) jwt.MapClaims {
+func payloadFunc(data interface{}) jwt.MapClaims {
   if user, ok := data.(*models.User); ok {
     return jwt.MapClaims{
       "id": user.ID.String(),
@@ -18,7 +18,7 @@ func PayloadFunc(data interface{}) jwt.MapClaims {
   return jwt.MapClaims{}
 }
 
-func IdentityHandler(c *gin.Context) interface{} {
+func identityHandler(c *gin.Context) interface{} {
   claims := jwt.ExtractClaims(c)
   id, _ := uuid.Parse(claims["id"].(string))
   var user models.User
@@ -30,7 +30,7 @@ func IdentityHandler(c *gin.Context) interface{} {
   return &user
 }
 
-func Authenticator(c *gin.Context) (interface{}, error) {
+func authenticator(c *gin.Context) (interface{}, error) {
   var credentials, user models.User
 
   if err := c.ShouldBind(&credentials); err != nil {
@@ -51,11 +51,11 @@ func Authenticator(c *gin.Context) (interface{}, error) {
   return &user, nil
 }
 
-func Authorizator(data interface{}, c *gin.Context) bool {
+func authorizator(data interface{}, c *gin.Context) bool {
   _, ok := data.(*models.User)
   return ok
 }
 
-func Unauthorized(c *gin.Context, code int, message string) {
+func unauthorized(c *gin.Context, code int, message string) {
   c.AbortWithStatusJSON(code, gin.H{"error": message})
 }
