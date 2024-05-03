@@ -1,6 +1,4 @@
-FROM golang
-
-EXPOSE 8080
+FROM golang:alpine as build
 
 WORKDIR /opt/app
 
@@ -11,4 +9,11 @@ RUN go mod verify
 COPY . ./
 RUN go build -o build -tags jsoniter
 
-CMD ["./build"]
+FROM scratch
+
+EXPOSE 8080
+
+COPY --from=build /opt/app/build /
+COPY --from=build /opt/app/templates /templates/
+
+ENTRYPOINT ["/build"]
