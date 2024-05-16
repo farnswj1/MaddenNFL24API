@@ -2,20 +2,12 @@ package main
 
 import (
   "app/auth"
-  "app/cache"
   "app/controllers"
   "app/middleware"
-  "app/models"
   "app/utils"
 
   "github.com/gin-gonic/gin"
 )
-
-func init() {
-  utils.LoadEnv()
-  models.ConnectDatabase()
-  cache.ConnectRedis()
-}
 
 func getRouter() *gin.Engine {
   gin.SetMode(utils.Env.Get("GIN_MODE", "debug"))

@@ -23,3 +23,7 @@ func ConnectRedis() {
   Cache = redis.NewClient(opt)
   utils.Logger.Println("Connected to Redis!")
 }
+
+func init() {
+  ConnectRedis()
+}

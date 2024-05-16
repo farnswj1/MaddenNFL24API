@@ -44,3 +44,7 @@ func ConnectDatabase() {
   DB = database
   utils.Logger.Println("Connected to database!")
 }
+
+func init() {
+  ConnectDatabase()
+}
