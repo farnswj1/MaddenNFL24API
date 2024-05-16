@@ -11,11 +11,13 @@ import (
   "github.com/gin-gonic/gin"
 )
 
-func getRouter() *gin.Engine {
+func init() {
   utils.LoadEnv()
   models.ConnectDatabase()
   cache.ConnectRedis()
+}
 
+func getRouter() *gin.Engine {
   gin.SetMode(utils.Env.Get("GIN_MODE", "debug"))
   router := gin.Default()
   router.RemoveExtraSlash = true
