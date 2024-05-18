@@ -10,7 +10,6 @@ import (
 )
 
 func getRouter() *gin.Engine {
-  gin.SetMode(utils.Env.Get("GIN_MODE", "debug"))
   router := gin.Default()
   router.RemoveExtraSlash = true
   router.Use(middleware.CorsMiddlware())
@@ -33,6 +32,10 @@ func getRouter() *gin.Engine {
   modifyPlayersGroup.DELETE("/:id", controllers.DeletePlayer)
 
   return router
+}
+
+func init() {
+  gin.SetMode(utils.Env.Get("GIN_MODE", "debug"))
 }
 
 func main() {
