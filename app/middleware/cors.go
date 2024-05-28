@@ -9,7 +9,7 @@ import (
   "github.com/gin-gonic/gin"
 )
 
-func CorsMiddlware() gin.HandlerFunc {
+func CorsMiddleware() gin.HandlerFunc {
   origins := strings.Split(utils.Env["CORS_ALLOWED_ORIGINS"], " ")
   return cors.New(cors.Config{
     AllowOrigins:  origins,

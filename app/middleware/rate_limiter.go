@@ -9,7 +9,7 @@ import (
   "github.com/gin-gonic/gin"
 )
 
-func RateLimiter(endpoint string, limit, duration int64) gin.HandlerFunc {
+func RateLimiterMiddleware(endpoint string, limit, duration int64) gin.HandlerFunc {
   return func(c *gin.Context) {
     context := c.Request.Context()
     key := endpoint + ":" + c.ClientIP()

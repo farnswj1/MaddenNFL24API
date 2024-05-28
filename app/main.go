@@ -12,7 +12,7 @@ import (
 func getRouter() *gin.Engine {
   router := gin.Default()
   router.RemoveExtraSlash = true
-  router.Use(middleware.CorsMiddlware())
+  router.Use(middleware.CorsMiddleware())
   router.LoadHTMLGlob("templates/*")
   router.NoRoute(controllers.PageNotFound)
   router.NoMethod(controllers.MethodNotAllowed)
@@ -22,7 +22,7 @@ func getRouter() *gin.Engine {
   authGroup.POST("/login", auth.JWTConfig.LoginHandler)
   authGroup.POST("/refresh", auth.JWTConfig.RefreshHandler)
 
-  playersGroup := router.Group("/players", middleware.RateLimiter("app", 10, 60))
+  playersGroup := router.Group("/players", middleware.RateLimiterMiddleware("app", 10, 60))
   playersGroup.GET("/", controllers.FindPlayers)
   playersGroup.GET("/:id", controllers.FindPlayer)
 
