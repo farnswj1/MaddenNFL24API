@@ -10,7 +10,7 @@ import (
 
 var DB *gorm.DB
 
-func ConnectDatabase() {
+func connectDatabase() {
   if DB != nil {
     return
   }
@@ -46,5 +46,5 @@ func ConnectDatabase() {
 }
 
 func init() {
-  ConnectDatabase()
+  connectDatabase()
 }

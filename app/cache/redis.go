@@ -8,7 +8,7 @@ import (
 
 var Cache *redis.Client
 
-func ConnectRedis() {
+func connectRedis() {
   if Cache != nil {
     return
   }
@@ -25,5 +25,5 @@ func ConnectRedis() {
 }
 
 func init() {
-  ConnectRedis()
+  connectRedis()
 }

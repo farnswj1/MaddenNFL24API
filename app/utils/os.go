@@ -10,7 +10,7 @@ import (
 type EnvMap map[string]string
 var Env EnvMap
 
-func LoadEnv() {
+func loadEnv() {
   if Env != nil {
     return
   }
@@ -35,5 +35,5 @@ func (env EnvMap) Get(key, fallback string) string {
 }
 
 func init() {
-  LoadEnv()
+  loadEnv()
 }
