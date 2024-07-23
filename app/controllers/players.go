@@ -9,19 +9,35 @@ import (
 )
 
 func FindPlayers(c *gin.Context) {
-  var params utils.Paginator
+  var paginator utils.Paginator
+  var playerParams utils.PlayerQueryParams
   var players []models.Player
+  var count int64
 
-  if err := c.ShouldBindQuery(&params); err != nil {
+  if err := c.ShouldBindQuery(&paginator); err != nil {
     c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"error": err.Error()})
     return
   }
 
-  models.DB.Limit(params.Size).Offset((params.Page - 1) * params.Size).Find(&players)
+  if err := c.ShouldBindQuery(&playerParams); err != nil {
+    c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+    return
+  }
+
+  models.
+    DB.
+    Model(&models.Player{}).
+    Where(playerParams).
+    Limit(paginator.Size).
+    Offset((paginator.Page - 1) * paginator.Size).
+    Find(&players)
+
+  models.DB.Model(&models.Player{}).Where(playerParams).Count(&count)
+
   c.JSON(http.StatusOK, gin.H{
-    "page": params.Page,
-    "size": params.Size,
-    "count": len(players),
+    "page": paginator.Page,
+    "size": paginator.Size,
+    "count": count,
     "data": players,
   })
 }
