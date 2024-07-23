@@ -18,7 +18,12 @@ func FindPlayers(c *gin.Context) {
   }
 
   models.DB.Limit(params.Size).Offset((params.Page - 1) * params.Size).Find(&players)
-  c.JSON(http.StatusOK, players)
+  c.JSON(http.StatusOK, gin.H{
+    "page": params.Page,
+    "size": params.Size,
+    "count": len(players),
+    "player": players,
+  })
 }
 
 func CreatePlayer(c *gin.Context) {
