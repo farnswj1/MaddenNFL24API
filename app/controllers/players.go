@@ -2,14 +2,22 @@ package controllers
 
 import (
   "app/models"
+  "app/utils"
   "net/http"
 
   "github.com/gin-gonic/gin"
 )
 
 func FindPlayers(c *gin.Context) {
+  var params utils.Paginator
   var players []models.Player
-  models.DB.Find(&players)
+
+  if err := c.ShouldBindQuery(&params); err != nil {
+    c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+    return
+  }
+
+  models.DB.Limit(params.Size).Offset((params.Page - 1) * params.Size).Find(&players)
   c.JSON(http.StatusOK, players)
 }
 
