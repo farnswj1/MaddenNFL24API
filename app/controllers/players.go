@@ -22,7 +22,7 @@ func FindPlayers(c *gin.Context) {
     "page": params.Page,
     "size": params.Size,
     "count": len(players),
-    "player": players,
+    "data": players,
   })
 }
 
