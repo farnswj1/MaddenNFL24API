@@ -2,17 +2,17 @@ package cache
 
 import (
   "app/utils"
+  "context"
 
   "github.com/redis/go-redis/v9"
 )
 
-var Cache *redis.Client
+var (
+  Cache = connectRedis()
+  ctx = context.Background()
+)
 
-func connectRedis() {
-  if Cache != nil {
-    return
-  }
-
+func connectRedis() *redis.Client {
   utils.Logger.Println("Connecting to Redis...")
   opt, err := redis.ParseURL(utils.Env["REDIS_URL"])
 
@@ -20,10 +20,12 @@ func connectRedis() {
     utils.Logger.Panic(err.Error())
   }
 
-  Cache = redis.NewClient(opt)
-  utils.Logger.Println("Connected to Redis!")
-}
+  cache := redis.NewClient(opt)
 
-func init() {
-  connectRedis()
+  if err := cache.Ping(ctx).Err(); err != nil {
+    utils.Logger.Panicln(err.Error())
+  }
+
+  utils.Logger.Println("Connected to Redis!")
+  return cache
 }

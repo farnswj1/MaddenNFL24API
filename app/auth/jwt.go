@@ -7,7 +7,9 @@ import (
   "github.com/appleboy/gin-jwt/v2"
 )
 
-var JWTConfig = func() *jwt.GinJWTMiddleware {
+var JWTConfig = initJWTConfig()
+
+func initJWTConfig() *jwt.GinJWTMiddleware {
   config, err := jwt.New(&jwt.GinJWTMiddleware{
     Key:         []byte(utils.Env["SECRET_KEY"]),
     MaxRefresh:  time.Hour,
@@ -24,4 +26,4 @@ var JWTConfig = func() *jwt.GinJWTMiddleware {
   }
 
   return config
-}()
+}

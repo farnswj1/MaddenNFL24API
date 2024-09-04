@@ -8,13 +8,9 @@ import (
   "gorm.io/gorm/logger"
 )
 
-var DB *gorm.DB
+var DB = connectDatabase()
 
-func connectDatabase() {
-  if DB != nil {
-    return
-  }
-
+func connectDatabase() *gorm.DB {
   utils.Logger.Println("Connecting to database...")
 
   config := &gorm.Config{}
@@ -41,10 +37,6 @@ func connectDatabase() {
     utils.Logger.Panic(err.Error())
   }
 
-  DB = database
   utils.Logger.Println("Connected to database!")
-}
-
-func init() {
-  connectDatabase()
+  return database
 }

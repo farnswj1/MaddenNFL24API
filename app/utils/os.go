@@ -8,13 +8,9 @@ import (
 )
 
 type EnvMap map[string]string
-var Env EnvMap
+var Env = loadEnv()
 
-func loadEnv() {
-  if Env != nil {
-    return
-  }
-
+func loadEnv() EnvMap {
   godotenv.Load()
   items := EnvMap{}
 
@@ -23,7 +19,7 @@ func loadEnv() {
     items[key] = val
   }
 
-  Env = items
+  return items
 }
 
 func (env EnvMap) Get(key, fallback string) string {
@@ -32,8 +28,4 @@ func (env EnvMap) Get(key, fallback string) string {
   }
 
   return fallback
-}
-
-func init() {
-  loadEnv()
 }
