@@ -40,5 +40,7 @@ func init() {
 
 func main() {
   router := getRouter()
+
+  utils.Logger.Println("Server is online!")
   router.Run()
 }

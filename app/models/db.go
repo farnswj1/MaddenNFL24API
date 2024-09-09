@@ -11,8 +11,6 @@ import (
 var DB = connectDatabase()
 
 func connectDatabase() *gorm.DB {
-  utils.Logger.Println("Connecting to database...")
-
   config := &gorm.Config{}
   mode := utils.Env.Get("GIN_MODE", "debug")
 
@@ -37,6 +35,5 @@ func connectDatabase() *gorm.DB {
     utils.Logger.Panic(err.Error())
   }
 
-  utils.Logger.Println("Connected to database!")
   return database
 }

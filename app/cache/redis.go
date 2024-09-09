@@ -13,7 +13,6 @@ var (
 )
 
 func connectRedis() *redis.Client {
-  utils.Logger.Println("Connecting to Redis...")
   opt, err := redis.ParseURL(utils.Env["REDIS_URL"])
 
   if err != nil {
@@ -26,6 +25,5 @@ func connectRedis() *redis.Client {
     utils.Logger.Panicln(err.Error())
   }
 
-  utils.Logger.Println("Connected to Redis!")
   return cache
 }
